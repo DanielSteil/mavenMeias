@@ -22,8 +22,13 @@ public class MeiaService {
 	
 	public List<Meia> findAll(){
 		return mr.findAll();
+	}		
+	
+	public void delete(Meia meia){
+		mr.deleteById(meia.getId());
 	}
 	
-	
-	
+	public Meia update(Meia meia) {
+		return mr.save(meia);
+	}
 }

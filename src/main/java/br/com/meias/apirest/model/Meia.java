@@ -38,4 +38,7 @@ public class Meia implements Serializable{
 	
 	@Column(nullable = false)
 	private String status;
+	
+	@Column(nullable = false)
+	private int qnt_estq;
 }
