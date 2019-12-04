@@ -1,0 +1,46 @@
+package br.com.meias.apirest.model;
+
+import static com.querydsl.core.types.PathMetadataFactory.*;
+
+import com.querydsl.core.types.dsl.*;
+
+import com.querydsl.core.types.PathMetadata;
+import javax.annotation.Generated;
+import com.querydsl.core.types.Path;
+
+
+/**
+ * QMeia is a Querydsl query type for Meia
+ */
+@Generated("com.querydsl.codegen.EntitySerializer")
+public class QMeia extends EntityPathBase<Meia> {
+
+    private static final long serialVersionUID = 246559787L;
+
+    public static final QMeia meia = new QMeia("meia");
+
+    public final NumberPath<Integer> id = createNumber("id", Integer.class);
+
+    public final StringPath modelo = createString("modelo");
+
+    public final NumberPath<Double> preco = createNumber("preco", Double.class);
+
+    public final NumberPath<Integer> qnt_estq = createNumber("qnt_estq", Integer.class);
+
+    public final StringPath status = createString("status");
+
+    public final NumberPath<Integer> tamanho = createNumber("tamanho", Integer.class);
+
+    public QMeia(String variable) {
+        super(Meia.class, forVariable(variable));
+    }
+
+    public QMeia(Path<? extends Meia> path) {
+        super(path.getType(), path.getMetadata());
+    }
+
+    public QMeia(PathMetadata metadata) {
+        super(Meia.class, metadata);
+    }
+
+}
