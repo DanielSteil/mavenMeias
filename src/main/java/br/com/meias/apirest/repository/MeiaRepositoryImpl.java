@@ -9,7 +9,9 @@ import org.springframework.data.domain.Pageable;
 
 import com.querydsl.jpa.impl.JPAQuery;
 
+import br.com.meias.apirest.dto.MeiaDTO;
 import br.com.meias.apirest.model.Meia;
+import br.com.meias.apirest.model.QMeia;
 
 public class MeiaRepositoryImpl implements MeiaRepositoryCustom{
 
@@ -25,27 +27,27 @@ public class MeiaRepositoryImpl implements MeiaRepositoryCustom{
 	}
 
 	@Override
-	public Page<Meia> consultaFiltro(Meia meiaFiltro, Pageable pageable) {
+	public Page<Meia> consultaFiltro(MeiaDTO meiaFiltro, Pageable pageable) {
 		JPAQuery<Meia> query = new JPAQuery<Meia>(em);
 		query.from(meia);
 		
-		long totalAvaliacoes = 0;
-		// FILTRO APLICAÇÃO
-		if (meiaFiltro.getModelo() != null && !meiaFiltro.getModelo().equals("")) query.where(meia.eq(meiaFiltro.getModelo()));
-		// FILTRO NOTA
+		long totalMeias = 0;
+		// FILTRO MODELO
+		if (meiaFiltro.getModelo() != null && !meiaFiltro.getModelo().equals("")) query.where(meia.modelo.eq(meiaFiltro.getModelo()));
+		// FILTRO PRECO
 		if (meiaFiltro.getPreco() != 0) query.where(meia.preco.eq(meiaFiltro.getPreco()));
-		// FILTRO USUARIO
-		if (meiaFiltro.getStatus() != null && !meiaFiltro.getStatus().equals("")) query.where(meia.usuario.eq(meiaFiltro.getStatus()));
-		// FILTRO DATA
-		if (meiaFiltro.getTamanho() != 0) query.where(meia.dataAvaliacao.eq(meiaFiltro.getTamanho()));
+		// FILTRO STATUS
+		if (meiaFiltro.getStatus() != null && !meiaFiltro.getStatus().equals("")) query.where(meia.status.eq(meiaFiltro.getStatus()));
+		// FILTRO TAMANHO
+		if (meiaFiltro.getTamanho() != 0) query.where(meia.tamanho.eq(meiaFiltro.getTamanho()));
 		
-		totalAvaliacoes = query.fetchCount();
+		totalMeias = query.fetchCount();
 		query.limit(pageable.getPageSize());
 		query.offset(pageable.getPageSize() * pageable.getPageNumber());
 		
 //		query.select(Projections.constructor(AvaliacaoShort.class, avaliacao.aplicacao, avaliacao.usuario));
 
-		return new PageImpl<Meia>(query.fetch(),pageable, totalAvaliacoes);
+		return new PageImpl<Meia>(query.fetch(),pageable, totalMeias);
 	}
 
 }
