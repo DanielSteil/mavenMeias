@@ -9,18 +9,15 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.meias.apirest.model.Meia;
-import br.com.meias.apirest.repository.MeiaRepository;
 import br.com.meias.apirest.service.MeiaService;
-import io.swagger.annotations.Api;
 
 @RestController
-@RequestMapping(value = "/apiMeia")
-@Api(value = "ApiRest Meia")
-@CrossOrigin(origins = "*")
+@RequestMapping("apiMeia")
 public class MeiaController {
 	
 	@Inject
@@ -32,17 +29,17 @@ public class MeiaController {
 	}
 	
 	@PostMapping("/meia")
-	public Meia salvaMeia(Meia meia) {
+	public Meia salvaMeia(@RequestBody Meia meia) {
 		return ms.save(meia);
 	}
 	
 	@DeleteMapping("/meia")
-	public void deletaMeia(Meia meia) {
+	public void deletaMeia(@RequestBody Meia meia) {
 		ms.delete(meia);
 	}
 	
 	@PutMapping("/meia")
-	public Meia atualizaMeia(Meia meia) {
+	public Meia atualizaMeia(@RequestBody Meia meia) {
 		return ms.update(meia);
 	}
 	
