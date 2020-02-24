@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<style>
+			* {
+				font-family: 'IBM Plex Sans', sans-serif;
+			}
+			p {
+				font-size: 16px;
+				color: #464444;
+			}
+         p.data {
+				font-size: 16px;
+             text-align: center;
+				color: #464444;
+         }
+			#container div {
+				margin: auto;
+			}
+			/*#container div div div {
+				margin-left: 15px;
+			}*/
+			@media print {
+				#container div {
+					margin: none;
+				}
+				#separator{
+					page-break-before: always;
+				}
+				#charts7{
+					border-style: solid;
+					border-color: #4285f4;
+					border-width: 1px;
+				}
+				#charts12{
+					border-style: solid;
+					border-color: darkred;
+					border-width: 1px;
+				}
+			}
+		    #container{
+				align-items: center;
+				width: 1200px;
+				margin: auto;
+			}
+			.chart {
+		        width: 80%;
+		        height: 400px;
+		    }
+			#epi{
+				padding: 10px;
+				text-align: center;
+				width: 80%;
+				height: 150px;
+			}
+			#charts7, #charts12 {
+				width: 69%;
+				height: 100%;
+				border-radius: 20px;
+				border-style: solid;
+				border-width: 1px;
+				margin-left: 13%;
+			}
+			#charts7 {
+				border-color: #4285f4;
+			}
+			#charts12 {
+				border-color: darkred;
+			}
+			#charts7 #endo {
+				font-size: 2em;
+				color: #4285f4;
+			}
+			#charts12 #endo {
+				font-size: 2em;
+				color: darkred;
+			}
+			#head {
+				width: fit-content;
+				display: flex;
+				margin: 0;
+				padding: 30px;
+			}
+			#container #head div{
+				display: grid;
+				padding: 10px 10px 10px 10px;
+				width: 100%;
+			}
+			#container #head #logo {
+				max-height: 100px;
+				max-width: 200px;
+			}
+			#charts25  { display: none; }
+			#charts17  { display: none; }
+			#charts11  { display: none; }
+			#charts10  { display: none; }
+			#charts24  { display: none; }
+			#charts14  { display: none; }
+		</style>
+	</head>
+	<body>
+		<div id="container">
+			<div id="head" style="margin:0">
+				<img id="logo" style="margin-left:240px; margin-right:40px" src="https://www.ottimizza.com.br/bussola/logo_bussola.png">
+				<div style="width: fit-content; margin: 0;">
+					<span style="margin-bottom: 5px;">09.008.007/0001-99</span>
+					<span>PROSPERANDO S/A</span>
+				</div>
+			</div>
+			<div id="epi">
+				<div class="chart" id="charts7">
+					<p>LUCRO ACUMULADO ATE - 10/2019</p>
+					<span id="endo"><strong>R$ 1.605.732,18</strong></span>
+				</div>
+			</div>
+			<div  class="chart" id="charts21"></div>
+			<div  class="chart" id="charts1"></div>
+			<div id="separator"></div>
+
+			<div  class="chart" id="charts8"></div>
+			<div  class="chart" id="charts9"></div>
+			<div  class="chart" id="charts13"></div>
+			<div id="separator"></div>
+
+			<div  class="chart" id="charts2"></div>
+			<div  class="chart" id="charts3"></div>
+			<div  class="chart" id="charts6"></div>
+			<div id="separator"></div>
+
+			<div  class="chart" id="charts4"></div>
+			<div  class="chart" id="charts5"></div>
+			<div  class="chart" id="charts15"></div>
+			<div id="separator"></div>
+
+			<div  class="chart" id="charts16"></div>
+			<div  class="chart" id="charts18"></div>
+			<div  class="chart" id="charts19"></div>
+			<div id="separator"></div>
+
+			<div  class="chart" id="charts20"></div>
+			<div  class="chart" id="charts22"></div>
+			<div  class="chart" id="charts23"></div>
+			<div id="separator"></div>
+
+			<div  class="chart" id="charts81"></div>
+			<div  class="chart" id="charts61"></div>
+			<div  class="chart" id="charts68"></div>
+			<div id="separator"></div>
+
+			<div  class="chart" id="charts69"></div>
+			<div  class="chart" id="charts62"></div>
+			<div  class="chart" id="charts66"></div>
+			<div id="separator"></div>
+
+			<div  class="chart" id="charts64"></div>
+			<div  class="chart" id="charts65"></div>
+		</div>
+
+	<footer>
+		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+		<script>
+			function drawCharts() {
+				let cores = ['#4285f4','#00ce93','#ce0000','#af00ce','#ce8900'];	
+				let options = {
+					legend: 'none',
+					titleTextStyle: {
+						color: '#464444',
+						fontSize: 16,
+						bold: false,
+					},
+					vAxis: {
+						gridlines: {
+							count:0,
+							color:'transparent'
+        				},
+						format: 'short',
+    					minValue: 0
+    				},
+    				hAxis: {
+						textStyle: { fontSize: 8 }
+					},
+					colors: cores
+				};
+				let optionsToBarChart = Object.assign({},options);
+				let optionsToPieChart = Object.assign({},options);
+				let optionsToLineChart = Object.assign({},options);
+				let optionsToColumnChart = Object.assign({},options);
+				let optionsToGauge = Object.assign({},options);
+				optionsToColumnChart.bar = {groupWidth: '80%'};
+				optionsToLineChart.curveType = 'function'
+				optionsToPieChart.legend = {position: 'bottom'};
+				optionsToPieChart.pieSliceTextStyle = {fontSize: 9};
+				optionsToPieChart.pieStartAngle = 90;
+				optionsToGauge.minorTicks = 99;
+
+				let dataTable21 = google.visualization.arrayToDataTable([
+					['LUCRO / PREJUIZO MENSAL','Mensal'],
+					['11/2018',-68694.0],
+					['12/2018',235081.0],
+					['01/2019',284249.0],
+					['02/2019',320660.0],
+					['03/2019',106494.0],
+					['04/2019',253113.0],
+					['05/2019',324646.0],
+					['06/2019',173652.0],
+					['07/2019',325358.0],
+					['08/2019',65810.0],
+					['09/2019',-166792.0],
+					['10/2019',-81463.0]
+				]);
+
+				dataTable21
+				let options21 = Object.assign({}, optionsToColumnChart);
+				options21.title = 'LUCRO / PREJUIZO MENSAL';
+				options21.focusTarget = 'category';
+
+				let grafico21 = new google.visualization.ColumnChart(
+					document.getElementById('charts21'));
+				grafico21.draw(dataTable21, options21);
+
+				options = {
+					legend: 'none',
+					titleTextStyle: {
+						color: '#464444',
+						fontSize: 16,
+						bold: false,
+					},
+					vAxis: {
+						gridlines: {
+							count:0,
+							color:'transparent'
+        				},
+						format: 'short',
+    					minValue: 0
+    				},
+    				hAxis: {
+						textStyle: { fontSize: 8 }
+					},
+					colors: cores
+				};
+				optionsToBarChart = Object.assign({},options);
+				optionsToPieChart = Object.assign({},options);
+				optionsToLineChart = Object.assign({},options);
+				optionsToColumnChart = Object.assign({},options);
+				optionsToGauge = Object.assign({},options);
+				optionsToColumnChart.bar = {groupWidth: '80%'};
+				optionsToLineChart.curveType = 'function'
+				optionsToPieChart.legend = {position: 'bottom'};
+				optionsToPieChart.pieSliceTextStyle = {fontSize: 9};
+				optionsToPieChart.pieStartAngle = 90;
+				optionsToGauge.minorTicks = 99;
+
+				let dataTable1 = google.visualization.arrayToDataTable([
+					['RECEITA OPERACIONAL BRUTA','Mensal'],
+					['11/2018',6855270.0],
+					['12/2018',6621330.0],
+					['01/2019',6476301.0],
+					['02/2019',6762793.0],
+					['03/2019',6987972.0],
+					['04/2019',6345831.0],
+					['05/2019',6465436.0],
+					['06/2019',6278267.0],
+					['07/2019',6340855.0],
+					['08/2019',6525787.0],
+					['09/2019',6393989.0],
+					['10/2019',7036595.0]
+				]);
+
+				dataTable1
+				let options1 = Object.assign({}, optionsToColumnChart);
+				options1.title = 'RECEITA OPERACIONAL BRUTA';
+				options1.focusTarget = 'category';
+
+				let grafico1 = new google.visualization.ColumnChart(
+					document.getElementById('charts1'));
+				grafico1.draw(dataTable1, options1);
+
+				options = {
+					legend: 'none',
+					titleTextStyle: {
+						color: '#464444',
+						fontSize: 16,
+						bold: false,
+					},
+					vAxis: {
+						gridlines: {
+							count:0,
+							color:'transparent'
+        				},
+						format: 'short',
+    					minValue: 0
+    				},
+    				hAxis: {
+						textStyle: { fontSize: 8 }
+					},
+					colors: cores
+				};
+				optionsToBarChart = Object.assign({},options);
+				optionsToPieChart = Object.assign({},options);
+				optionsToLineChart = Object.assign({},options);
+				optionsToColumnChart = Object.assign({},options);
+				optionsToGauge = Object.assign({},options);
+				optionsToColumnChart.bar = {groupWidth: '80%'};
+				optionsToLineChart.curveType = 'function'
+				optionsToPieChart.legend = {position: 'bottom'};
+				optionsToPieChart.pieSliceTextStyle = {fontSize: 9};
+				optionsToPieChart.pieStartAngle = 90;
+				optionsToGauge.minorTicks = 99;
+
+				let dataTable8 = google.visualization.arrayToDataTable([
+					['DEDUCOES DA RECEITA','Mensal'],
+					['11/2018',1480958.0],
+					['12/2018',1591748.0],
+					['01/2019',1486945.0],
+					['02/2019',1450761.0],
+					['03/2019',1504388.0],
+					['04/2019',1374789.0],
+					['05/2019',1432486.0],
+					['06/2019',1442264.0],
+					['07/2019',1389795.0],
+					['08/2019',1427902.0],
+					['09/2019',1410661.0],
+					['10/2019',1754892.0]
+				]);
+
+				dataTable8
+				let options8 = Object.assign({}, optionsToColumnChart);
+				options8.title = 'DEDUCOES DA RECEITA';
+				options8.focusTarget = 'category';
+
+				let grafico8 = new google.visualization.ColumnChart(
+					document.getElementById('charts8'));
+				grafico8.draw(dataTable8, options8);
+
+				options = {
+					legend: 'none',
+					titleTextStyle: {
+						color: '#464444',
+						fontSize: 16,
+						bold: false,
+					},
+					vAxis: {
+						gridlines: {
+							count:0,
+							color:'transparent'
+        				},
+						format: 'short',
+    					minValue: 0
+    				},
+    				hAxis: {
+						textStyle: { fontSize: 8 }
+					},
+					colors: cores
+				};
+				optionsToBarChart = Object.assign({},options);
+				optionsToPieChart = Object.assign({},options);
+				optionsToLineChart = Object.assign({},options);
+				optionsToColumnChart = Object.assign({},options);
+				optionsToGauge = Object.assign({},options);
+				optionsToColumnChart.bar = {groupWidth: '80%'};
+				optionsToLineChart.curveType = 'function'
+				optionsToPieChart.legend = {position: 'bottom'};
+				optionsToPieChart.pieSliceTextStyle = {fontSize: 9};
+				optionsToPieChart.pieStartAngle = 90;
+				optionsToGauge.minorTicks = 99;
+
+				let dataTable9 = google.visualization.arrayToDataTable([
+					['CUSTO MERCADORIAS VENDIDAS','Mensal'],
+					['11/2018',3242895.0],
+					['12/2018',2870845.0],
+					['01/2019',2929409.0],
+					['02/2019',3328734.0],
+					['03/2019',3656974.0],
+					['04/2019',3078503.0],
+					['05/2019',2992240.0],
+					['06/2019',2809187.0],
+					['07/2019',2880928.0],
+					['08/2019',2980897.0],
+					['09/2019',2891065.0],
+					['10/2019',3246623.0]
+				]);
+
+				dataTable9
+				let options9 = Object.assign({}, optionsToColumnChart);
+				options9.title = 'CUSTO MERCADORIAS VENDIDAS';
+				options9.focusTarget = 'category';
+
+				let grafico9 = new google.visualization.ColumnChart(
+					document.getElementById('charts9'));
+				grafico9.draw(dataTable9, options9);
+
+				options = {
+					legend: 'none',
+					titleTextStyle: {
+						color: '#464444',
+						fontSize: 16,
+						bold: false,
+					},
+					vAxis: {
+						gridlines: {
+							count:0,
+							color:'transparent'
+        				},
+						format: 'short',
+    					minValue: 0
+    				},
+    				hAxis: {
+						textStyle: { fontSize: 8 }
+					},
+					colors: cores
+				};
+				optionsToBarChart = Object.assign({},options);
+				optionsToPieChart = Object.assign({},options);
+				optionsToLineChart = Object.assign({},options);
+				optionsToColumnChart = Object.assign({},options);
+				optionsToGauge = Object.assign({},options);
+				optionsToColumnChart.bar = {groupWidth: '80%'};
+				optionsToLineChart.curveType = 'function'
+				optionsToPieChart.legend = {position: 'bottom'};
+				optionsToPieChart.pieSliceTextStyle = {fontSize: 9};
+				optionsToPieChart.pieStartAngle = 90;
+				optionsToGauge.minorTicks = 99;
+
+				let dataTable13 = google.visualization.arrayToDataTable([
+					['DETALHE DOS CUSTOS','Mensal'],
+					['Compras a Prazo',2814031.0],
+					['( - ) Transferencias De Mercadorias...',181874.0],
+					['( - ) Icm`s s/ Compras',160926.0],
+					['Transferencias De Mercadorias Recebidas',159369.0],
+					['Outros',79774.0]
+				]);
+
+				dataTable13.sort([{ column: 1, desc: true }]);
+				let options13 = Object.assign({}, optionsToPieChart);
+				options13.title = 'DETALHE DOS CUSTOS - 10/2019';
+				options13.pieHole = 0.4;
+				options13.sliceVisibilityThreshold = .0;
+				options13.legend = {position: 'right'};
+
+				let grafico13 = new google.visualization.PieChart(
+					document.getElementById('charts13'));
+				grafico13.draw(dataTable13, options13);
+
+				options = {
+					legend: 'none',
+					titleTextStyle: {
+						color: '#464444',
+						fontSize: 16,
+						bold: false,
+					},
+					vAxis: {
+						gridlines: {
+							count:0,
+							color:'transparent'
+        				},
+						format: 'short',
+    					minValue: 0
+    				},
+    				hAxis: {
+						textStyle: { fontSize: 8 }
+					},
+					colors: cores
+				};
+				optionsToBarChart = Object.assign({},options);
+				optionsToPieChart = Object.assign({},options);
+				optionsToLineChart = Object.assign({},options);
+				optionsToColumnChart = Object.assign({},options);
+				optionsToGauge = Object.assign({},options);
+				optionsToColumnChart.bar = {groupWidth: '80%'};
+				optionsToLineChart.curveType = 'function'
+				optionsToPieChart.legend = {position: 'bottom'};
+				optionsToPieChart.pieSliceTextStyle = {fontSize: 9};
+				optionsToPieChart.pieStartAngle = 90;
+				optionsToGauge.minorTicks = 99;
+
+				let dataTable2 = google.visualization.arrayToDataTable([
+					['DESPESAS OPERACIONAIS','Mensal'],
+					['11/2018',2132168.0],
+					['12/2018',1907328.0],
+					['01/2019',1833566.0],
+					['02/2019',1616619.0],
+					['03/2019',1794384.0],
+					['04/2019',1587474.0],
+					['05/2019',1684824.0],
+					['06/2019',1804198.0],
+					['07/2019',1705703.0],
+					['08/2019',2018266.0],
+					['09/2019',2220609.0],
+					['10/2019',2105973.0]
+				]);
+
+				dataTable2
+				let options2 = Object.assign({}, optionsToColumnChart);
+				options2.title = 'DESPESAS OPERACIONAIS';
+				options2.focusTarget = 'category';
+
+				let grafico2 = new google.visualization.ColumnChart(
+					document.getElementById('charts2'));
+				grafico2.draw(dataTable2, options2);
+
+				options = {
+					legend: 'none',
+					titleTextStyle: {
+						color: '#464444',
+						fontSize: 16,
+						bold: false,
+					},
+					vAxis: {
+						gridlines: {
+							count:0,
+							color:'transparent'
+        				},
+						format: 'short',
+    					minValue: 0
+    				},
+    				hAxis: {
+						textStyle: { fontSize: 8 }
+					},
+					colors: cores
+				};
+				optionsToBarChart = Object.assign({},options);
+				optionsToPieChart = Object.assign({},options);
+				optionsToLineChart = Object.assign({},options);
+				optionsToColumnChart = Object.assign({},options);
+				optionsToGauge = Object.assign({},options);
+				optionsToColumnChart.bar = {groupWidth: '80%'};
+				optionsToLineChart.curveType = 'function'
+				optionsToPieChart.legend = {position: 'bottom'};
+				optionsToPieChart.pieSliceTextStyle = {fontSize: 9};
+				optionsToPieChart.pieStartAngle = 90;
+				optionsToGauge.minorTicks = 99;
+
+				let dataTable3 = google.visualization.arrayToDataTable([
+					['DETALHES DAS DESPESAS','Mensal'],
+					['Perdas',783109.0],
+					['Despesas c/ Depart Pessoal - Vendas',596586.0],
+					['Despesas c/ Depart Pessoal',183099.0],
+					['Despesas Administrativas',180059.0],
+					['Outros',363118.0]
+				]);
+
+				dataTable3.sort([{ column: 1, desc: true }]);
+				let options3 = Object.assign({}, optionsToPieChart);
+				options3.title = 'DETALHES DAS DESPESAS - 10/2019';
+				options3.pieHole = 0.4;
+				options3.sliceVisibilityThreshold = .0;
+				options3.legend = {position: 'right'};
+
+				let grafico3 = new google.visualization.PieChart(
+					document.getElementById('charts3'));
+				grafico3.draw(dataTable3, options3);
+
+				options = {
+					legend: 'none',
+					titleTextStyle: {
+						color: '#464444',
+						fontSize: 16,
+						bold: false,
+					},
+					vAxis: {
+						gridlines: {
+							count:0,
+							color:'transparent'
+        				},
+						format: 'short',
+    					minValue: 0
+    				},
+    				hAxis: {
+						textStyle: { fontSize: 8 }
+					},
+					colors: cores
+				};
+				optionsToBarChart = Object.assign({},options);
+				optionsToPieChart = Object.assign({},options);
+				optionsToLineChart = Object.assign({},options);
+				optionsToColumnChart = Object.assign({},options);
+				optionsToGauge = Object.assign({},options);
+				optionsToColumnChart.bar = {groupWidth: '80%'};
+				optionsToLineChart.curveType = 'function'
+				optionsToPieChart.legend = {position: 'bottom'};
+				optionsToPieChart.pieSliceTextStyle = {fontSize: 9};
+				optionsToPieChart.pieStartAngle = 90;
+				optionsToGauge.minorTicks = 99;
+
+				let dataTable6 = google.visualization.arrayToDataTable([
+					['% DESPESAS SOBRE FATURAMENTO','Mensal'],
+					['11/2018',31.1],
+					['12/2018',28.81],
+					['01/2019',28.31],
+					['02/2019',23.9],
+					['03/2019',25.68],
+					['04/2019',25.02],
+					['05/2019',26.06],
+					['06/2019',28.74],
+					['07/2019',26.9],
+					['08/2019',30.93],
+					['09/2019',34.73],
+					['10/2019',29.93]
+				]);
+
+				dataTable6
+				let options6 = Object.assign({}, optionsToLineChart);
+				options6.title = '% DESPESAS SOBRE FATURAMENTO';
+				options6.pointSize = 2;
+
+				let grafico6 = new google.visualization.LineChart(
+					document.getElementById('charts6'));
+				grafico6.draw(dataTable6, options6);
+
+				options = {
+					legend: 'none',
+					titleTextStyle: {
+						color: '#464444',
+						fontSize: 16,
+						bold: false,
+					},
+					vAxis: {
+						gridlines: {
+							count:0,
+							color:'transparent'
+        				},
+						format: 'short',
+    					minValue: 0
+    				},
+    				hAxis: {
+						textStyle: { fontSize: 8 }
+					},
+					colors: cores
+				};
+				optionsToBarChart = Object.assign({},options);
+				optionsToPieChart = Object.assign({},options);
+				optionsToLineChart = Object.assign({},options);
+				optionsToColumnChart = Object.assign({},options);
+				optionsToGauge = Object.assign({},options);
+				optionsToColumnChart.bar = {groupWidth: '80%'};
+				optionsToLineChart.curveType = 'function'
+				optionsToPieChart.legend = {position: 'bottom'};
+				optionsToPieChart.pieSliceTextStyle = {fontSize: 9};
+				optionsToPieChart.pieStartAngle = 90;
+				optionsToGauge.minorTicks = 99;
+
+				let dataTable4 = google.visualization.arrayToDataTable([
+					['GERACAO DE CAIXA MENSAL','Mensal'],
+					['11/2018',-316777.0],
+					['12/2018',-563814.0],
+					['01/2019',-32853.0],
+					['02/2019',27828.0],
+					['03/2019',167465.0],
+					['04/2019',227378.0],
+					['05/2019',34314.0],
+					['06/2019',223938.0],
+					['07/2019',-371031.0],
+					['08/2019',94083.0],
+					['09/2019',158960.0],
+					['10/2019',-107005.0]
+				]);
+
+				dataTable4
+				let options4 = Object.assign({}, optionsToColumnChart);
+				options4.title = 'GERACAO DE CAIXA MENSAL';
+				options4.focusTarget = 'category';
+
+				let grafico4 = new google.visualization.ColumnChart(
+					document.getElementById('charts4'));
+				grafico4.draw(dataTable4, options4);
+
+				options = {
+					legend: 'none',
+					titleTextStyle: {
+						color: '#464444',
+						fontSize: 16,
+						bold: false,
+					},
+					vAxis: {
+						gridlines: {
+							count:0,
+							color:'transparent'
+        				},
+						format: 'short',
+    					minValue: 0
+    				},
+    				hAxis: {
+						textStyle: { fontSize: 8 }
+					},
+					colors: cores
+				};
+				optionsToBarChart = Object.assign({},options);
+				optionsToPieChart = Object.assign({},options);
+				optionsToLineChart = Object.assign({},options);
+				optionsToColumnChart = Object.assign({},options);
+				optionsToGauge = Object.assign({},options);
+				optionsToColumnChart.bar = {groupWidth: '80%'};
+				optionsToLineChart.curveType = 'function'
+				optionsToPieChart.legend = {position: 'bottom'};
+				optionsToPieChart.pieSliceTextStyle = {fontSize: 9};
+				optionsToPieChart.pieStartAngle = 90;
+				optionsToGauge.minorTicks = 99;
+
+				let dataTable5 = google.visualization.arrayToDataTable([
+					['GERACAO DE CAIXA ACUMULADO','Mensal'],
+					['11/2018',1157491.0],
+					['12/2018',593678.0],
+					['01/2019',1018334.0],
+					['02/2019',1046162.0],
+					['03/2019',1213628.0],
+					['04/2019',1441006.0],
+					['05/2019',1475321.0],
+					['06/2019',1699259.0],
+					['07/2019',1328228.0],
+					['08/2019',1422312.0],
+					['09/2019',1581272.0],
+					['10/2019',1474268.0]
+				]);
+
+				dataTable5
+				let options5 = Object.assign({}, optionsToLineChart);
+				options5.title = 'GERACAO DE CAIXA ACUMULADO';
+				options5.pointSize = 2;
+
+				let grafico5 = new google.visualization.LineChart(
+					document.getElementById('charts5'));
+				grafico5.draw(dataTable5, options5);
+
+				options = {
+					legend: 'none',
+					titleTextStyle: {
+						color: '#464444',
+						fontSize: 16,
+						bold: false,
+					},
+					vAxis: {
+						gridlines: {
+							count:0,
+							color:'transparent'
+        				},
+						format: 'short',
+    					minValue: 0
+    				},
+    				hAxis: {
+						textStyle: { fontSize: 8 }
+					},
+					colors: cores
+				};
+				optionsToBarChart = Object.assign({},options);
+				optionsToPieChart = Object.assign({},options);
+				optionsToLineChart = Object.assign({},options);
+				optionsToColumnChart = Object.assign({},options);
+				optionsToGauge = Object.assign({},options);
+				optionsToColumnChart.bar = {groupWidth: '80%'};
+				optionsToLineChart.curveType = 'function'
+				optionsToPieChart.legend = {position: 'bottom'};
+				optionsToPieChart.pieSliceTextStyle = {fontSize: 9};
+				optionsToPieChart.pieStartAngle = 90;
+				optionsToGauge.minorTicks = 99;
+
+				let dataTable15 = google.visualization.arrayToDataTable([
+					['COMPOSICAO ATIVO CIRCULANTE','Disponivel','Clientes','Estoques'],
+					['11/2018',1157491.0,1.4232785E7,2.5073321E7],
+					['12/2018',593678.0,1.3401827E7,2.5684921E7],
+					['01/2019',1018334.0,1.7840393E7,2.2427297E7],
+					['02/2019',1046162.0,1.8748077E7,2.2006944E7],
+					['03/2019',1213628.0,1.8837795E7,2.2023353E7],
+					['04/2019',1441006.0,1.7135869E7,2.2058806E7],
+					['05/2019',1475321.0,1.5874711E7,2.2134155E7],
+					['06/2019',1699259.0,1.5757806E7,2.3272814E7],
+					['07/2019',1328228.0,1.5986163E7,2.3922879E7],
+					['08/2019',1422312.0,1.4281554E7,2.4827002E7],
+					['09/2019',1581272.0,1.385783E7,2.5304638E7],
+					['10/2019',1474268.0,1.4167444E7,2.4751701E7]
+				]);
+
+				dataTable15
+				let options15 = Object.assign({}, optionsToColumnChart);
+				options15.title = 'COMPOSICAO ATIVO CIRCULANTE';
+				options15.isStacked = 'percent';
+				options15.legend = {position: 'bottom'};
+				options15.vAxis.format = 'percent';
+
+				let grafico15 = new google.visualization.ColumnChart(
+					document.getElementById('charts15'));
+				grafico15.draw(dataTable15, options15);
+
+				options = {
+					legend: 'none',
+					titleTextStyle: {
+						color: '#464444',
+						fontSize: 16,
+						bold: false,
+					},
+					vAxis: {
+						gridlines: {
+							count:0,
+							color:'transparent'
+        				},
+						format: 'short',
+    					minValue: 0
+    				},
+    				hAxis: {
+						textStyle: { fontSize: 8 }
+					},
+					colors: cores
+				};
+				optionsToBarChart = Object.assign({},options);
+				optionsToPieChart = Object.assign({},options);
+				optionsToLineChart = Object.assign({},options);
+				optionsToColumnChart = Object.assign({},options);
+				optionsToGauge = Object.assign({},options);
+				optionsToColumnChart.bar = {groupWidth: '80%'};
+				optionsToLineChart.curveType = 'function'
+				optionsToPieChart.legend = {position: 'bottom'};
+				optionsToPieChart.pieSliceTextStyle = {fontSize: 9};
+				optionsToPieChart.pieStartAngle = 90;
+				optionsToGauge.minorTicks = 99;
+
+				let dataTable16 = google.visualization.arrayToDataTable([
+					['COMPOSICAO PASSIVO CIRCULANTE','Fornecedores','Impostos','Salarios'],
+					['11/2018',7241290.0,1622343.0,478267.0],
+					['12/2018',7846266.0,1915346.0,470920.0],
+					['01/2019',8145225.0,1790701.0,415152.0],
+					['02/2019',8357369.0,1967363.0,477766.0],
+					['03/2019',8760808.0,1956937.0,433249.0],
+					['04/2019',7932143.0,1328675.0,369898.0],
+					['05/2019',6517756.0,1296431.0,454447.0],
+					['06/2019',7578854.0,1118619.0,453935.0],
+					['07/2019',7722755.0,1199548.0,456104.0],
+					['08/2019',7628917.0,1187148.0,446580.0],
+					['09/2019',8253067.0,1187434.0,450351.0],
+					['10/2019',6278987.0,1925449.0,616758.0]
+				]);
+
+				dataTable16
+				let options16 = Object.assign({}, optionsToColumnChart);
+				options16.title = 'COMPOSICAO PASSIVO CIRCULANTE';
+				options16.isStacked = 'percent';
+				options16.legend = {position: 'bottom'};
+				options16.vAxis.format = 'percent';
+
+				let grafico16 = new google.visualization.ColumnChart(
+					document.getElementById('charts16'));
+				grafico16.draw(dataTable16, options16);
+
+				options = {
+					legend: 'none',
+					titleTextStyle: {
+						color: '#464444',
+						fontSize: 16,
+						bold: false,
+					},
+					vAxis: {
+						gridlines: {
+							count:0,
+							color:'transparent'
+        				},
+						format: 'short',
+    					minValue: 0
+    				},
+    				hAxis: {
+						textStyle: { fontSize: 8 }
+					},
+					colors: cores
+				};
+				optionsToBarChart = Object.assign({},options);
+				optionsToPieChart = Object.assign({},options);
+				optionsToLineChart = Object.assign({},options);
+				optionsToColumnChart = Object.assign({},options);
+				optionsToGauge = Object.assign({},options);
+				optionsToColumnChart.bar = {groupWidth: '80%'};
+				optionsToLineChart.curveType = 'function'
+				optionsToPieChart.legend = {position: 'bottom'};
+				optionsToPieChart.pieSliceTextStyle = {fontSize: 9};
+				optionsToPieChart.pieStartAngle = 90;
+				optionsToGauge.minorTicks = 99;
+
+				let dataTable18 = google.visualization.arrayToDataTable([
+					['RESULTADO OPERACIONAL','Receita','Deducoes','Custos','Despesas'],
+					['11/2018',7.2469101E7,1.6155847E7,3.4037459E7,2.0503788E7],
+					['12/2018',7.9090431E7,1.7747596E7,3.6908305E7,2.2411116E7],
+					['01/2019',6476301.0,1486945.0,2929409.0,1833566.0],
+					['02/2019',1.3239095E7,2937707.0,6258143.0,3450186.0],
+					['03/2019',2.0227067E7,4442095.0,9915117.0,5244570.0],
+					['04/2019',2.6572899E7,5816885.0,1.2993621E7,6832044.0],
+					['05/2019',3.3038335E7,7249371.0,1.5985862E7,8516868.0],
+					['06/2019',3.9316602E7,8691636.0,1.8795049E7,1.0321067E7],
+					['07/2019',4.5657458E7,1.0081431E7,2.1675978E7,1.202677E7],
+					['08/2019',5.2183246E7,1.1509334E7,2.4656875E7,1.4045037E7],
+					['09/2019',5.8577235E7,1.2919996E7,2.7547941E7,1.6265646E7],
+					['10/2019',6.5613831E7,1.4674889E7,3.0794564E7,1.837162E7]
+				]);
+
+				dataTable18
+				let options18 = Object.assign({}, optionsToLineChart);
+				options18.title = 'RESULTADO OPERACIONAL';
+				options18.legend = {position: 'bottom'};
+				options18.pointSize = 2;
+
+				let grafico18 = new google.visualization.LineChart(
+					document.getElementById('charts18'));
+				grafico18.draw(dataTable18, options18);
+
+				options = {
+					legend: 'none',
+					titleTextStyle: {
+						color: '#464444',
+						fontSize: 16,
+						bold: false,
+					},
+					vAxis: {
+						gridlines: {
+							count:0,
+							color:'transparent'
+        				},
+						format: 'short',
+    					minValue: 0
+    				},
+    				hAxis: {
+						textStyle: { fontSize: 8 }
+					},
+					colors: cores
+				};
+				optionsToBarChart = Object.assign({},options);
+				optionsToPieChart = Object.assign({},options);
+				optionsToLineChart = Object.assign({},options);
+				optionsToColumnChart = Object.assign({},options);
+				optionsToGauge = Object.assign({},options);
+				optionsToColumnChart.bar = {groupWidth: '80%'};
+				optionsToLineChart.curveType = 'function'
+				optionsToPieChart.legend = {position: 'bottom'};
+				optionsToPieChart.pieSliceTextStyle = {fontSize: 9};
+				optionsToPieChart.pieStartAngle = 90;
+				optionsToGauge.minorTicks = 99;
+
+				let dataTable19 = google.visualization.arrayToDataTable([
+					['INDICES LIQUIDEZ','Corrente','Seca','Imediata'],
+					['11/2018',2.63,1.0,0.08],
+					['12/2018',2.59,0.91,0.04],
+					['01/2019',2.93,1.35,0.07],
+					['02/2019',2.89,1.37,0.07],
+					['03/2019',2.86,1.37,0.08],
+					['04/2019',3.07,1.41,0.11],
+					['05/2019',3.34,1.48,0.12],
+					['06/2019',3.06,1.32,0.13],
+					['07/2019',3.0,1.27,0.1],
+					['08/2019',3.0,1.17,0.1],
+					['09/2019',2.84,1.08,0.11],
+					['10/2019',2.8,1.09,0.1]
+				]);
+
+				dataTable19
+				let options19 = Object.assign({}, optionsToLineChart);
+				options19.title = 'INDICES LIQUIDEZ';
+				options19.legend = {position: 'bottom'};
+				options19.pointSize = 2;
+
+				let grafico19 = new google.visualization.LineChart(
+					document.getElementById('charts19'));
+				grafico19.draw(dataTable19, options19);
+
+				options = {
+					legend: 'none',
+					titleTextStyle: {
+						color: '#464444',
+						fontSize: 16,
+						bold: false,
+					},
+					vAxis: {
+						gridlines: {
+							count:0,
+							color:'transparent'
+        				},
+						format: 'short',
+    					minValue: 0
+    				},
+    				hAxis: {
+						textStyle: { fontSize: 8 }
+					},
+					colors: cores
+				};
+				optionsToBarChart = Object.assign({},options);
+				optionsToPieChart = Object.assign({},options);
+				optionsToLineChart = Object.assign({},options);
+				optionsToColumnChart = Object.assign({},options);
+				optionsToGauge = Object.assign({},options);
+				optionsToColumnChart.bar = {groupWidth: '80%'};
+				optionsToLineChart.curveType = 'function'
+				optionsToPieChart.legend = {position: 'bottom'};
+				optionsToPieChart.pieSliceTextStyle = {fontSize: 9};
+				optionsToPieChart.pieStartAngle = 90;
+				optionsToGauge.minorTicks = 99;
+
+				let dataTable20 = google.visualization.arrayToDataTable([
+					['INDICES RENTABILIDADE','Ativo','Pl','Receita'],
+					['11/2018',2.75,4.09,2.12],
+					['12/2018',3.22,4.83,2.24],
+					['01/2019',0.52,0.72,4.39],
+					['02/2019',1.08,1.54,4.57],
+					['03/2019',1.27,1.81,3.52],
+					['04/2019',1.76,2.46,3.63],
+					['05/2019',2.39,3.28,3.9],
+					['06/2019',2.64,3.72,3.72],
+					['07/2019',3.18,4.56,3.92],
+					['08/2019',3.33,4.76,3.55],
+					['09/2019',3.02,4.38,2.88],
+					['10/2019',2.89,4.21,2.45]
+				]);
+
+				dataTable20
+				let options20 = Object.assign({}, optionsToLineChart);
+				options20.title = 'INDICES RENTABILIDADE';
+				options20.legend = {position: 'bottom'};
+				options20.pointSize = 2;
+
+				let grafico20 = new google.visualization.LineChart(
+					document.getElementById('charts20'));
+				grafico20.draw(dataTable20, options20);
+
+				options = {
+					legend: 'none',
+					titleTextStyle: {
+						color: '#464444',
+						fontSize: 16,
+						bold: false,
+					},
+					vAxis: {
+						gridlines: {
+							count:0,
+							color:'transparent'
+        				},
+						format: 'short',
+    					minValue: 0
+    				},
+    				hAxis: {
+						textStyle: { fontSize: 8 }
+					},
+					colors: cores
+				};
+				optionsToBarChart = Object.assign({},options);
+				optionsToPieChart = Object.assign({},options);
+				optionsToLineChart = Object.assign({},options);
+				optionsToColumnChart = Object.assign({},options);
+				optionsToGauge = Object.assign({},options);
+				optionsToColumnChart.bar = {groupWidth: '80%'};
+				optionsToLineChart.curveType = 'function'
+				optionsToPieChart.legend = {position: 'bottom'};
+				optionsToPieChart.pieSliceTextStyle = {fontSize: 9};
+				optionsToPieChart.pieStartAngle = 90;
+				optionsToGauge.minorTicks = 99;
+
+				let dataTable22 = google.visualization.arrayToDataTable([
+					['TITULO DO GRAFICO','Mensal'],
+					['Salarios',271494.0],
+					['Premiacao',95925.0],
+					['Inss',73381.0],
+					['Pat - Programa Alimentacao Trabalhador',35377.0],
+					['Outros',120472.0]
+				]);
+
+				dataTable22
+				let options22 = Object.assign({}, optionsToLineChart);
+				options22.title = 'TITULO DO GRAFICO - 10/2019';
+				options22.legend = {position: 'bottom'};
+				options22.pointSize = 2;
+
+				let grafico22 = new google.visualization.LineChart(
+					document.getElementById('charts22'));
+				grafico22.draw(dataTable22, options22);
+
+				options = {
+					legend: 'none',
+					titleTextStyle: {
+						color: '#464444',
+						fontSize: 16,
+						bold: false,
+					},
+					vAxis: {
+						gridlines: {
+							count:0,
+							color:'transparent'
+        				},
+						format: 'short',
+    					minValue: 0
+    				},
+    				hAxis: {
+						textStyle: { fontSize: 8 }
+					},
+					colors: cores
+				};
+				optionsToBarChart = Object.assign({},options);
+				optionsToPieChart = Object.assign({},options);
+				optionsToLineChart = Object.assign({},options);
+				optionsToColumnChart = Object.assign({},options);
+				optionsToGauge = Object.assign({},options);
+				optionsToColumnChart.bar = {groupWidth: '80%'};
+				optionsToLineChart.curveType = 'function'
+				optionsToPieChart.legend = {position: 'bottom'};
+				optionsToPieChart.pieSliceTextStyle = {fontSize: 9};
+				optionsToPieChart.pieStartAngle = 90;
+				optionsToGauge.minorTicks = 99;
+
+				let dataTable23 = google.visualization.arrayToDataTable([
+					['TITULO DO GRAFICO','Um','Dois','Tres'],
+					['10/2018',0.001,0.001,0.001],
+					['11/2018',0.001,0.001,0.001],
+					['12/2018',0.001,0.001,0.001],
+					['01/2019',0.52,0.72,4.39],
+					['02/2019',1.08,1.54,4.57],
+					['03/2019',1.27,1.81,3.52],
+					['04/2019',1.76,2.46,3.63],
+					['05/2019',2.39,3.28,3.9],
+					['06/2019',2.64,3.72,3.72],
+					['07/2019',3.18,4.56,3.92],
+					['08/2019',3.33,4.76,3.55],
+					['09/2019',3.02,4.38,2.88]
+				]);
+
+				dataTable23
+				let options23 = Object.assign({}, optionsToLineChart);
+				options23.title = 'TITULO DO GRAFICO';
+				options23.legend = {position: 'bottom'};
+				options23.pointSize = 2;
+
+				let grafico23 = new google.visualization.LineChart(
+					document.getElementById('charts23'));
+				grafico23.draw(dataTable23, options23);
+
+				options = {
+					legend: 'none',
+					titleTextStyle: {
+						color: '#464444',
+						fontSize: 16,
+						bold: false,
+					},
+					vAxis: {
+						gridlines: {
+							count:0,
+							color:'transparent'
+        				},
+						format: 'short',
+    					minValue: 0
+    				},
+    				hAxis: {
+						textStyle: { fontSize: 8 }
+					},
+					colors: cores
+				};
+				optionsToBarChart = Object.assign({},options);
+				optionsToPieChart = Object.assign({},options);
+				optionsToLineChart = Object.assign({},options);
+				optionsToColumnChart = Object.assign({},options);
+				optionsToGauge = Object.assign({},options);
+				optionsToColumnChart.bar = {groupWidth: '80%'};
+				optionsToLineChart.curveType = 'function'
+				optionsToPieChart.legend = {position: 'bottom'};
+				optionsToPieChart.pieSliceTextStyle = {fontSize: 9};
+				optionsToPieChart.pieStartAngle = 90;
+				optionsToGauge.minorTicks = 99;
+
+				let dataTable81 = google.visualization.arrayToDataTable([
+					['LUCRO / PREJUIZO MENSAL','2019','2018'],
+					['01',335414.0,284249.0],
+					['02',378379.0,320660.0],
+					['03',125663.0,106494.0],
+					['04',298674.0,253113.0],
+					['05',383082.0,324646.0],
+					['06',204909.0,173652.0],
+					['07',383923.0,325358.0],
+					['08',77655.0,65810.0],
+					['09',-196814.0,-166792.0],
+					['10',-96126.0,-81463.0],
+					['11',null,-68694.0],
+					['12',null,235081.0]
+				]);
+
+				dataTable81
+				let options81 = Object.assign({}, optionsToLineChart);
+				options81.title = 'LUCRO / PREJUIZO MENSAL';
+				options81.legend = {position: 'bottom'};
+				options81.pointSize = 2;
+
+				let grafico81 = new google.visualization.LineChart(
+					document.getElementById('charts81'));
+				grafico81.draw(dataTable81, options81);
+
+				options = {
+					legend: 'none',
+					titleTextStyle: {
+						color: '#464444',
+						fontSize: 16,
+						bold: false,
+					},
+					vAxis: {
+						gridlines: {
+							count:0,
+							color:'transparent'
+        				},
+						format: 'short',
+    					minValue: 0
+    				},
+    				hAxis: {
+						textStyle: { fontSize: 8 }
+					},
+					colors: cores
+				};
+				optionsToBarChart = Object.assign({},options);
+				optionsToPieChart = Object.assign({},options);
+				optionsToLineChart = Object.assign({},options);
+				optionsToColumnChart = Object.assign({},options);
+				optionsToGauge = Object.assign({},options);
+				optionsToColumnChart.bar = {groupWidth: '80%'};
+				optionsToLineChart.curveType = 'function'
+				optionsToPieChart.legend = {position: 'bottom'};
+				optionsToPieChart.pieSliceTextStyle = {fontSize: 9};
+				optionsToPieChart.pieStartAngle = 90;
+				optionsToGauge.minorTicks = 99;
+
+				let dataTable61 = google.visualization.arrayToDataTable([
+					['RECEITA OPERACIONAL BRUTA','2019','2018'],
+					['01',7642036.0,6476301.0],
+					['02',7980096.0,6762793.0],
+					['03',8245807.0,6987972.0],
+					['04',7488081.0,6345831.0],
+					['05',7629214.0,6465436.0],
+					['06',7408355.0,6278267.0],
+					['07',7482209.0,6340855.0],
+					['08',7700429.0,6525787.0],
+					['09',7544907.0,6393989.0],
+					['10',8303183.0,7036595.0],
+					['11',null,6855270.0],
+					['12',null,6621330.0]
+				]);
+
+				dataTable61
+				let options61 = Object.assign({}, optionsToLineChart);
+				options61.title = 'RECEITA OPERACIONAL BRUTA';
+				options61.legend = {position: 'bottom'};
+				options61.pointSize = 2;
+
+				let grafico61 = new google.visualization.LineChart(
+					document.getElementById('charts61'));
+				grafico61.draw(dataTable61, options61);
+
+				options = {
+					legend: 'none',
+					titleTextStyle: {
+						color: '#464444',
+						fontSize: 16,
+						bold: false,
+					},
+					vAxis: {
+						gridlines: {
+							count:0,
+							color:'transparent'
+        				},
+						format: 'short',
+    					minValue: 0
+    				},
+    				hAxis: {
+						textStyle: { fontSize: 8 }
+					},
+					colors: cores
+				};
+				optionsToBarChart = Object.assign({},options);
+				optionsToPieChart = Object.assign({},options);
+				optionsToLineChart = Object.assign({},options);
+				optionsToColumnChart = Object.assign({},options);
+				optionsToGauge = Object.assign({},options);
+				optionsToColumnChart.bar = {groupWidth: '80%'};
+				optionsToLineChart.curveType = 'function'
+				optionsToPieChart.legend = {position: 'bottom'};
+				optionsToPieChart.pieSliceTextStyle = {fontSize: 9};
+				optionsToPieChart.pieStartAngle = 90;
+				optionsToGauge.minorTicks = 99;
+
+				let dataTable68 = google.visualization.arrayToDataTable([
+					['DEDUCOES DA RECEITA','2019','2018'],
+					['01',1754595.0,1486945.0],
+					['02',1711899.0,1450761.0],
+					['03',1775178.0,1504388.0],
+					['04',1622252.0,1374789.0],
+					['05',1690333.0,1432486.0],
+					['06',1701872.0,1442264.0],
+					['07',1639958.0,1389795.0],
+					['08',1684925.0,1427902.0],
+					['09',1664580.0,1410661.0],
+					['10',2070773.0,1754892.0],
+					['11',null,1480958.0],
+					['12',null,1591748.0]
+				]);
+
+				dataTable68
+				let options68 = Object.assign({}, optionsToLineChart);
+				options68.title = 'DEDUCOES DA RECEITA';
+				options68.legend = {position: 'bottom'};
+				options68.pointSize = 2;
+
+				let grafico68 = new google.visualization.LineChart(
+					document.getElementById('charts68'));
+				grafico68.draw(dataTable68, options68);
+
+				options = {
+					legend: 'none',
+					titleTextStyle: {
+						color: '#464444',
+						fontSize: 16,
+						bold: false,
+					},
+					vAxis: {
+						gridlines: {
+							count:0,
+							color:'transparent'
+        				},
+						format: 'short',
+    					minValue: 0
+    				},
+    				hAxis: {
+						textStyle: { fontSize: 8 }
+					},
+					colors: cores
+				};
+				optionsToBarChart = Object.assign({},options);
+				optionsToPieChart = Object.assign({},options);
+				optionsToLineChart = Object.assign({},options);
+				optionsToColumnChart = Object.assign({},options);
+				optionsToGauge = Object.assign({},options);
+				optionsToColumnChart.bar = {groupWidth: '80%'};
+				optionsToLineChart.curveType = 'function'
+				optionsToPieChart.legend = {position: 'bottom'};
+				optionsToPieChart.pieSliceTextStyle = {fontSize: 9};
+				optionsToPieChart.pieStartAngle = 90;
+				optionsToGauge.minorTicks = 99;
+
+				let dataTable69 = google.visualization.arrayToDataTable([
+					['CUSTO MERCADORIAS VENDIDAS','2019','2018'],
+					['01',3456703.0,2929409.0],
+					['02',3927906.0,3328734.0],
+					['03',4315229.0,3656974.0],
+					['04',3632634.0,3078503.0],
+					['05',3530843.0,2992240.0],
+					['06',3314841.0,2809187.0],
+					['07',3399495.0,2880928.0],
+					['08',3517459.0,2980897.0],
+					['09',3411456.0,2891065.0],
+					['10',3831015.0,3246623.0],
+					['11',null,3242895.0],
+					['12',null,2870845.0]
+				]);
+
+				dataTable69
+				let options69 = Object.assign({}, optionsToLineChart);
+				options69.title = 'CUSTO MERCADORIAS VENDIDAS';
+				options69.legend = {position: 'bottom'};
+				options69.pointSize = 2;
+
+				let grafico69 = new google.visualization.LineChart(
+					document.getElementById('charts69'));
+				grafico69.draw(dataTable69, options69);
+
+				options = {
+					legend: 'none',
+					titleTextStyle: {
+						color: '#464444',
+						fontSize: 16,
+						bold: false,
+					},
+					vAxis: {
+						gridlines: {
+							count:0,
+							color:'transparent'
+        				},
+						format: 'short',
+    					minValue: 0
+    				},
+    				hAxis: {
+						textStyle: { fontSize: 8 }
+					},
+					colors: cores
+				};
+				optionsToBarChart = Object.assign({},options);
+				optionsToPieChart = Object.assign({},options);
+				optionsToLineChart = Object.assign({},options);
+				optionsToColumnChart = Object.assign({},options);
+				optionsToGauge = Object.assign({},options);
+				optionsToColumnChart.bar = {groupWidth: '80%'};
+				optionsToLineChart.curveType = 'function'
+				optionsToPieChart.legend = {position: 'bottom'};
+				optionsToPieChart.pieSliceTextStyle = {fontSize: 9};
+				optionsToPieChart.pieStartAngle = 90;
+				optionsToGauge.minorTicks = 99;
+
+				let dataTable62 = google.visualization.arrayToDataTable([
+					['DESPESAS OPERACIONAIS','2019','2018'],
+					['01',2163608.0,1833566.0],
+					['02',1907611.0,1616619.0],
+					['03',2117373.0,1794384.0],
+					['04',1873219.0,1587474.0],
+					['05',1988093.0,1684824.0],
+					['06',2128954.0,1804198.0],
+					['07',2012730.0,1705703.0],
+					['08',2381554.0,2018266.0],
+					['09',2620318.0,2220609.0],
+					['10',2485049.0,2105973.0],
+					['11',null,2132168.0],
+					['12',null,1907328.0]
+				]);
+
+				dataTable62
+				let options62 = Object.assign({}, optionsToLineChart);
+				options62.title = 'DESPESAS OPERACIONAIS';
+				options62.legend = {position: 'bottom'};
+				options62.pointSize = 2;
+
+				let grafico62 = new google.visualization.LineChart(
+					document.getElementById('charts62'));
+				grafico62.draw(dataTable62, options62);
+
+				options = {
+					legend: 'none',
+					titleTextStyle: {
+						color: '#464444',
+						fontSize: 16,
+						bold: false,
+					},
+					vAxis: {
+						gridlines: {
+							count:0,
+							color:'transparent'
+        				},
+						format: 'short',
+    					minValue: 0
+    				},
+    				hAxis: {
+						textStyle: { fontSize: 8 }
+					},
+					colors: cores
+				};
+				optionsToBarChart = Object.assign({},options);
+				optionsToPieChart = Object.assign({},options);
+				optionsToLineChart = Object.assign({},options);
+				optionsToColumnChart = Object.assign({},options);
+				optionsToGauge = Object.assign({},options);
+				optionsToColumnChart.bar = {groupWidth: '80%'};
+				optionsToLineChart.curveType = 'function'
+				optionsToPieChart.legend = {position: 'bottom'};
+				optionsToPieChart.pieSliceTextStyle = {fontSize: 9};
+				optionsToPieChart.pieStartAngle = 90;
+				optionsToGauge.minorTicks = 99;
+
+				let dataTable66 = google.visualization.arrayToDataTable([
+					['% DESPESAS SOBRE FATURAMENTO','2019','2018'],
+					['01',33.4058,28.31],
+					['02',28.201999999999998,23.9],
+					['03',30.3024,25.68],
+					['04',29.5236,25.02],
+					['05',30.750799999999998,26.06],
+					['06',33.913199999999996,28.74],
+					['07',31.741999999999997,26.9],
+					['08',36.4974,30.93],
+					['09',40.981399999999994,34.73],
+					['10',35.3174,29.93],
+					['11',null,31.1],
+					['12',null,28.81]
+				]);
+
+				dataTable66
+				let options66 = Object.assign({}, optionsToLineChart);
+				options66.title = '% DESPESAS SOBRE FATURAMENTO';
+				options66.legend = {position: 'bottom'};
+				options66.pointSize = 2;
+
+				let grafico66 = new google.visualization.LineChart(
+					document.getElementById('charts66'));
+				grafico66.draw(dataTable66, options66);
+
+				options = {
+					legend: 'none',
+					titleTextStyle: {
+						color: '#464444',
+						fontSize: 16,
+						bold: false,
+					},
+					vAxis: {
+						gridlines: {
+							count:0,
+							color:'transparent'
+        				},
+						format: 'short',
+    					minValue: 0
+    				},
+    				hAxis: {
+						textStyle: { fontSize: 8 }
+					},
+					colors: cores
+				};
+				optionsToBarChart = Object.assign({},options);
+				optionsToPieChart = Object.assign({},options);
+				optionsToLineChart = Object.assign({},options);
+				optionsToColumnChart = Object.assign({},options);
+				optionsToGauge = Object.assign({},options);
+				optionsToColumnChart.bar = {groupWidth: '80%'};
+				optionsToLineChart.curveType = 'function'
+				optionsToPieChart.legend = {position: 'bottom'};
+				optionsToPieChart.pieSliceTextStyle = {fontSize: 9};
+				optionsToPieChart.pieStartAngle = 90;
+				optionsToGauge.minorTicks = 99;
+
+				let dataTable64 = google.visualization.arrayToDataTable([
+					['GERACAO DE CAIXA MENSAL','2019','2018'],
+					['01',-38766.0,-32853.0],
+					['02',32837.0,27828.0],
+					['03',197609.0,167465.0],
+					['04',268306.0,227378.0],
+					['05',40491.0,34314.0],
+					['06',264247.0,223938.0],
+					['07',-437817.0,-371031.0],
+					['08',111018.0,94083.0],
+					['09',187572.0,158960.0],
+					['10',-126265.0,-107005.0],
+					['11',null,-316777.0],
+					['12',null,-563814.0]
+				]);
+
+				dataTable64
+				let options64 = Object.assign({}, optionsToLineChart);
+				options64.title = 'GERACAO DE CAIXA MENSAL';
+				options64.legend = {position: 'bottom'};
+				options64.pointSize = 2;
+
+				let grafico64 = new google.visualization.LineChart(
+					document.getElementById('charts64'));
+				grafico64.draw(dataTable64, options64);
+
+				options = {
+					legend: 'none',
+					titleTextStyle: {
+						color: '#464444',
+						fontSize: 16,
+						bold: false,
+					},
+					vAxis: {
+						gridlines: {
+							count:0,
+							color:'transparent'
+        				},
+						format: 'short',
+    					minValue: 0
+    				},
+    				hAxis: {
+						textStyle: { fontSize: 8 }
+					},
+					colors: cores
+				};
+				optionsToBarChart = Object.assign({},options);
+				optionsToPieChart = Object.assign({},options);
+				optionsToLineChart = Object.assign({},options);
+				optionsToColumnChart = Object.assign({},options);
+				optionsToGauge = Object.assign({},options);
+				optionsToColumnChart.bar = {groupWidth: '80%'};
+				optionsToLineChart.curveType = 'function'
+				optionsToPieChart.legend = {position: 'bottom'};
+				optionsToPieChart.pieSliceTextStyle = {fontSize: 9};
+				optionsToPieChart.pieStartAngle = 90;
+				optionsToGauge.minorTicks = 99;
+
+				let dataTable65 = google.visualization.arrayToDataTable([
+					['GERACAO DE CAIXA ACUMULADO','2019','2018'],
+					['01',1201634.0,1018334.0],
+					['02',1234471.0,1046162.0],
+					['03',1432081.0,1213628.0],
+					['04',1700388.0,1441006.0],
+					['05',1740879.0,1475321.0],
+					['06',2005126.0,1699259.0],
+					['07',1567310.0,1328228.0],
+					['08',1678329.0,1422312.0],
+					['09',1865902.0,1581272.0],
+					['10',1739637.0,1474268.0],
+					['11',null,1157491.0],
+					['12',null,593678.0]
+				]);
+
+				dataTable65
+				let options65 = Object.assign({}, optionsToLineChart);
+				options65.title = 'GERACAO DE CAIXA ACUMULADO';
+				options65.legend = {position: 'bottom'};
+				options65.pointSize = 2;
+
+				let grafico65 = new google.visualization.LineChart(
+					document.getElementById('charts65'));
+				grafico65.draw(dataTable65, options65);
+
+				options = {
+					legend: 'none',
+					titleTextStyle: {
+						color: '#464444',
+						fontSize: 16,
+						bold: false,
+					},
+					vAxis: {
+						gridlines: {
+							count:0,
+							color:'transparent'
+        				},
+						format: 'short',
+    					minValue: 0
+    				},
+    				hAxis: {
+						textStyle: { fontSize: 8 }
+					},
+					colors: cores
+				};
+				optionsToBarChart = Object.assign({},options);
+				optionsToPieChart = Object.assign({},options);
+				optionsToLineChart = Object.assign({},options);
+				optionsToColumnChart = Object.assign({},options);
+				optionsToGauge = Object.assign({},options);
+				optionsToColumnChart.bar = {groupWidth: '80%'};
+				optionsToLineChart.curveType = 'function'
+				optionsToPieChart.legend = {position: 'bottom'};
+				optionsToPieChart.pieSliceTextStyle = {fontSize: 9};
+				optionsToPieChart.pieStartAngle = 90;
+				optionsToGauge.minorTicks = 99;
+
+			}
+		</script>
+		<script>
+			google.charts.load('current', {
+				'packages': ['corechart', 'gauge', 'bar'],
+				'language': 'pt'
+			});
+			google.charts.setOnLoadCallback(drawCharts);
+		</script>
+    <p class="data"> Compartilhado em 20/02/2020 14:30:25</div>	</footer>
+	</body>
+</html>
